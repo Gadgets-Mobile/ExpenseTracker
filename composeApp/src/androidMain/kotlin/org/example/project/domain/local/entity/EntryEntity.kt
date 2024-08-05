@@ -12,7 +12,7 @@ data class AmountEntity(
     val id: Long? = null,
     val title: String,
     val date: String,
-    val amount: Double,
+    val amount: Int,
     val type: Type,
     val category: Category,
 )

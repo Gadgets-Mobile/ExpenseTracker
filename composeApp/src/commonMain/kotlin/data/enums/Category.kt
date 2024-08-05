@@ -6,5 +6,6 @@ enum class Category {
     SHOPPING,
     ENTERTAINMENT,
     BILLS,
+    LOANS,
     OTHER
 }

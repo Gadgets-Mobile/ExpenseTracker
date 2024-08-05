@@ -21,6 +21,9 @@ interface AmountDao {
     @Query("SELECT * FROM $AMOUNT_TABLE_NAME")
     fun getAllEntries(): Flow<List<AmountEntity>>
 
+    @Query("SELECT * FROM $AMOUNT_TABLE_NAME WHERE id = :id")
+    suspend fun getEntryById(id: Long): AmountEntity?
+
     @Query("DELETE FROM $AMOUNT_TABLE_NAME WHERE id = :id")
     suspend fun deleteById(id: Long)
 }

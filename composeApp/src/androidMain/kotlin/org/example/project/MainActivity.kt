@@ -5,6 +5,7 @@ import EntryItem
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
@@ -14,12 +15,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import data.enums.Category
 import data.enums.Type
 import data.models.Entry
+import viewmodel.AddEditEntryViewModel
+import viewmodel.DashboardViewModel
+import viewmodel.RecommendationViewmodel
 
 class MainActivity : ComponentActivity() {
+
+    private val dashboardViewModel by viewModels<DashboardViewModel>()
+    private val addEditEntryViewModel by viewModels<AddEditEntryViewModel>()
+    private val recommendationViewmodel by viewModels<RecommendationViewmodel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            App()
+            App(dashboardViewModel, addEditEntryViewModel, recommendationViewmodel)
         }
     }
 }
