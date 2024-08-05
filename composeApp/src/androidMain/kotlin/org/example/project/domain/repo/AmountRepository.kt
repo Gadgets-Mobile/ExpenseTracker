@@ -8,8 +8,13 @@ class AmountRepository(
     private val dao: AmountDao,
 ) {
     suspend fun upsertData(entry: Entry) {
-        //dao.upsertAmountEntity(entry.toEntity())
+        dao.upsertAmountEntity(entry.toEntity())
+    }
+
+    suspend fun deleteById(id:Long) {
+        dao.deleteById(id)
     }
 
     fun getAllEntries() = dao.getAllEntries()
+    suspend fun getEntryById(id: Long) = dao.getEntryById(id)
 }
