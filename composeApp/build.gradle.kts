@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -16,7 +15,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -27,20 +26,31 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
+            implementation(libs.androidx.appcompat)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.kotlinx.datetime)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            implementation(libs.koin.core)
+
+            // Navigation
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha07")
+
+            // AI
+            implementation("dev.shreyaspatil.generativeai:generativeai-google:0.5.0-1.0.0")
         }
     }
 }
@@ -78,6 +88,15 @@ android {
         compose = true
     }
     dependencies {
+        implementation(libs.gson)
+
+        implementation(libs.androidx.room.common)
+        implementation(libs.androidx.room.ktx)
+
+        implementation(libs.koin.core)
+        implementation(libs.koin.android)
+        implementation(libs.koin.androidx.compose)
+
         debugImplementation(compose.uiTooling)
     }
 }
