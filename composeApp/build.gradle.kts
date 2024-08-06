@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -23,17 +25,20 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
-            isStatic = true
+            isStatic = false
         }
     }
 
     sourceSets {
-
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.appcompat)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.kotlinx.datetime)
+
+            implementation(libs.gson)
+            implementation(libs.koin.androidx.compose)
+
+            implementation(libs.sqldelight.android.driver)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,19 +49,25 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.androidx.navigation)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.lifecycle.viewmodel.compose)
+
             implementation(libs.koin.core)
-
-            // Navigation
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha07")
-
-            // AI
-            implementation("dev.shreyaspatil.generativeai:generativeai-google:0.5.0-1.0.0")
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.google.generativeai)
+        }
+        iosMain.dependencies {
+            implementation(libs.sqldelight.native.driver)
         }
     }
 }
 
 android {
-    namespace = "org.example.project"
+    namespace = "com.zoho.gadgets.expense.tracker"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -64,7 +75,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "org.example.project"
+        applicationId = "com.zoho.gadgets.expense.tracker"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -88,16 +99,14 @@ android {
         compose = true
     }
     dependencies {
-        implementation(libs.gson)
-
-        implementation(libs.androidx.room.common)
-        implementation(libs.androidx.room.ktx)
-
-        implementation(libs.koin.core)
-        implementation(libs.koin.android)
-        implementation(libs.koin.androidx.compose)
-
         debugImplementation(compose.uiTooling)
     }
 }
 
+sqldelight {
+    databases {
+        create("AppDatabase") {
+            packageName = "com.zoho.gadgets.expense.tracker.cache"
+        }
+    }
+}
