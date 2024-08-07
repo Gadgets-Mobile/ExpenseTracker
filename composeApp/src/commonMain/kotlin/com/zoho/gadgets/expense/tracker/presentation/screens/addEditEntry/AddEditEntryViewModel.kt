@@ -7,7 +7,6 @@ import com.zoho.gadgets.expense.tracker.domain.models.Transaction
 import com.zoho.gadgets.expense.tracker.domain.repository.TransactionsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AddEditEntryViewModel(

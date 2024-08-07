@@ -2,10 +2,9 @@ package com.zoho.gadgets.expense.tracker.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +21,6 @@ import com.zoho.gadgets.expense.tracker.domain.enums.Category.TRANSPORT
 import com.zoho.gadgets.expense.tracker.domain.enums.Type
 import com.zoho.gadgets.expense.tracker.domain.models.Transaction
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TransactionItem(
     data: Transaction,
@@ -40,7 +38,7 @@ fun TransactionItem(
 
     ListItem(
         modifier = modifier,
-        icon = {
+        leadingContent = {
             Box(
                 modifier = Modifier.size(40.dp),
                 contentAlignment = Alignment.Center
@@ -52,13 +50,13 @@ fun TransactionItem(
                 )
             }
         },
-        text = {
+        headlineContent = {
             Text(data.title)
         },
-        secondaryText = {
+        supportingContent = {
             Text(data.category.name.lowercase().replaceFirstChar { it.uppercase() })
         },
-        trailing = {
+        trailingContent = {
             val symbol = when (data.type) {
                 Type.INCOME -> "+"
                 Type.EXPENSE -> "-"
@@ -71,7 +69,7 @@ fun TransactionItem(
 
             Text(
                 "$symbol$${data.amount}",
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 color = textColor
             )
         },

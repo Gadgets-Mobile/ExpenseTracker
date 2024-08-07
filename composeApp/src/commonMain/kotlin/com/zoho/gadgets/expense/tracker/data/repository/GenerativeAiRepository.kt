@@ -11,7 +11,7 @@ class GenerativeAiRepository(
     private val responseParser: ResponseParser,
 ) {
     private val modelName = "gemini-1.5-flash"
-    private val apiKey = "AIzaSyABXyNFmn5KjvaYqpS0B_jATAdEBKN6kGA"
+    private val apiKey = "YOUR_API_KEY"
     private val generationConfig = generationConfig {
         temperature = 0f
         topK = 64

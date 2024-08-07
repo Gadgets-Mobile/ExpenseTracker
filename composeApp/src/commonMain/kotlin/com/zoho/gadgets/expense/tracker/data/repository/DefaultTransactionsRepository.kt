@@ -7,7 +7,6 @@ import com.zoho.gadgets.expense.tracker.domain.models.Transaction
 import com.zoho.gadgets.expense.tracker.domain.repository.TransactionsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.withContext
 
 internal class DefaultTransactionsRepository(
     private val localDataSource: LocalDataSource,

@@ -1,29 +1,27 @@
 package com.zoho.gadgets.expense.tracker.presentation.screens.addEditEntry
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,7 +42,7 @@ import com.zoho.gadgets.expense.tracker.presentation.navigation.enums.Purpose.ED
 import org.koin.compose.viewmodel.koinViewModel
 
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEditEntryRoute(
     navController: NavController,
@@ -61,9 +59,6 @@ fun AddEditEntryRoute(
     }
 
     Scaffold(
-        modifier = Modifier
-            .background(MaterialTheme.colors.primaryVariant)
-            .statusBarsPadding(),
         topBar = {
             TopAppBar(
                 title = {
@@ -107,9 +102,11 @@ fun AddEditEntryRoute(
                 }
             )
         },
-    ) {
+    ) { padding ->
         Column(
             modifier = Modifier
+                .padding(padding)
+                .consumeWindowInsets(padding)
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
@@ -167,13 +164,12 @@ fun AddEditEntryRoute(
                 ) {
                     Category.entries.forEach { selectionOption ->
                         DropdownMenuItem(
+                            text = { Text(selectionOption.name) },
                             onClick = {
                                 viewModel.updateEntry(transaction.copy(category = selectionOption))
                                 categoryExpanded = false
                             },
-                        ) {
-                            Text(selectionOption.name)
-                        }
+                        )
                     }
                 }
             }
@@ -199,13 +195,14 @@ fun AddEditEntryRoute(
                 ) {
                     Type.entries.forEach { selectionOption ->
                         DropdownMenuItem(
+                            text = {
+                                Text(selectionOption.name)
+                            },
                             onClick = {
                                 viewModel.updateEntry(transaction.copy(type = selectionOption))
                                 typeExpanded = false
                             },
-                        ) {
-                            Text(selectionOption.name)
-                        }
+                        )
                     }
                 }
             }

@@ -1,22 +1,22 @@
 package com.zoho.gadgets.expense.tracker.presentation.screens.dashboard
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Payment
 import androidx.compose.material.icons.filled.ShoppingBag
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,6 +30,7 @@ import com.zoho.gadgets.expense.tracker.presentation.navigation.enums.Purpose.AD
 import com.zoho.gadgets.expense.tracker.presentation.navigation.model.AppScreen
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardRoute(
     navController: NavController,
@@ -42,9 +43,6 @@ fun DashboardRoute(
     }
 
     Scaffold(
-        modifier = Modifier
-            .background(MaterialTheme.colors.primaryVariant)
-            .statusBarsPadding(),
         topBar = {
             TopAppBar(
                 title = { Text("Expense Tracker") },
@@ -84,8 +82,9 @@ fun DashboardRoute(
                 )
             }
         }
-    ) {
+    ) { padding ->
         LazyColumn(
+            modifier = Modifier.padding(padding).consumeWindowInsets(padding),
             contentPadding = PaddingValues(bottom = 100.dp)
         ) {
             items(entries) { entry ->

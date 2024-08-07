@@ -6,7 +6,6 @@ import com.zoho.gadgets.expense.tracker.domain.enums.Category
 import com.zoho.gadgets.expense.tracker.domain.enums.Type
 import com.zoho.gadgets.expense.tracker.domain.models.Transaction
 import com.zoho.gadgets.expense.tracker.domain.repository.TransactionsRepository
-import com.zoho.gadgets.expense.tracker.presentation.components.TransactionItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

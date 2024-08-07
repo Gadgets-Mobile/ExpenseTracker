@@ -1,30 +1,30 @@
 package com.zoho.gadgets.expense.tracker.presentation.screens.debtRecommendation
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -33,12 +33,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DebtRecommendationScreenRoute(
     navController: NavController,
@@ -62,13 +63,12 @@ fun DebtRecommendationScreenRoute(
         }
     }
 
+    val topAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
-        modifier = Modifier
-            .background(MaterialTheme.colors.primaryVariant)
-            .statusBarsPadding(),
         topBar = {
-            TopAppBar(
+            LargeTopAppBar(
                 title = { Text("How fast can I repay my debt?") },
+                scrollBehavior = topAppBarScrollBehavior,
                 actions = {
                     IconButton(
                         enabled = !loading,
@@ -103,9 +103,12 @@ fun DebtRecommendationScreenRoute(
                 }
             )
         },
-    ) {
+    ) { padding ->
         Column(
             modifier = Modifier
+                .padding(padding)
+                .consumeWindowInsets(padding)
+                .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection)
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
                 .padding(16.dp),
@@ -184,7 +187,7 @@ fun DebtRecommendationScreenRoute(
                 ) {
                     Text(
                         text = "Suggestions",
-                        style = MaterialTheme.typography.h6,
+                        style = MaterialTheme.typography.titleLarge,
                     )
 
                     LazyRow(
@@ -193,8 +196,6 @@ fun DebtRecommendationScreenRoute(
                         items(recommendation) { item ->
                             Card(
                                 modifier = Modifier.fillParentMaxWidth(0.8f),
-                                elevation = 1.dp,
-                                border = BorderStroke(1.dp, Color.Gray),
                             ) {
                                 Column(
                                     modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -202,19 +203,19 @@ fun DebtRecommendationScreenRoute(
                                 ) {
                                     Text(
                                         text = "Description",
-                                        style = MaterialTheme.typography.subtitle2,
+                                        style = MaterialTheme.typography.titleMedium,
                                     )
                                     Text(
                                         text = item.description,
-                                        style = MaterialTheme.typography.body2,
+                                        style = MaterialTheme.typography.bodyLarge,
                                     )
                                     Text(
                                         text = "Action",
-                                        style = MaterialTheme.typography.subtitle2,
+                                        style = MaterialTheme.typography.titleMedium,
                                     )
                                     Text(
                                         text = item.action,
-                                        style = MaterialTheme.typography.body2,
+                                        style = MaterialTheme.typography.bodyLarge,
                                     )
                                 }
                             }
