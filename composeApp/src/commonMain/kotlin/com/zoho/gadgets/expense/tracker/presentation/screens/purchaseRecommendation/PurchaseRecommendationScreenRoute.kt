@@ -28,6 +28,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,10 +37,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.zoho.gadgets.expense.tracker.di.koinViewModel
 import com.zoho.gadgets.expense.tracker.domain.enums.PurchaseRecommendationHeaderType
-import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,11 +49,11 @@ fun PurchaseRecommendationScreenRoute(
 ) {
     var salary by remember { mutableStateOf("10000") }
     var productRate by remember { mutableStateOf("8000") }
-    val expenses by viewModel.expense.collectAsStateWithLifecycle()
+    val expenses by viewModel.expense.collectAsState()
     var emiNeeded by remember { mutableStateOf(false) }
 
-    val loading by viewModel.loading.collectAsStateWithLifecycle()
-    val recommendation by viewModel.recommendation.collectAsStateWithLifecycle()
+    val loading by viewModel.loading.collectAsState()
+    val recommendation by viewModel.recommendation.collectAsState()
 
     DisposableEffect(Unit) {
         viewModel.calculateTotalExpense()

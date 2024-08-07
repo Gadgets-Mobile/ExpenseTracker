@@ -24,6 +24,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,14 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.zoho.gadgets.expense.tracker.di.koinViewModel
 import com.zoho.gadgets.expense.tracker.domain.enums.Category
 import com.zoho.gadgets.expense.tracker.domain.enums.Type
 import com.zoho.gadgets.expense.tracker.presentation.navigation.enums.Purpose
 import com.zoho.gadgets.expense.tracker.presentation.navigation.enums.Purpose.ADD
 import com.zoho.gadgets.expense.tracker.presentation.navigation.enums.Purpose.EDIT
-import org.koin.compose.viewmodel.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,7 +50,7 @@ fun AddEditEntryRoute(
     id: Long? = null,
     viewModel: AddEditEntryViewModel = koinViewModel(),
 ) {
-    val transaction by viewModel.transaction.collectAsStateWithLifecycle()
+    val transaction by viewModel.transaction.collectAsState()
 
     LaunchedEffect(Unit) {
         if (id != null && purpose == EDIT) {

@@ -1,3 +1,4 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -18,6 +19,8 @@ kotlin {
         }
     }
 
+    jvm("desktop")
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -36,6 +39,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
 
             implementation(libs.gson)
+            implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
             implementation(libs.sqldelight.android.driver)
@@ -56,9 +60,15 @@ kotlin {
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
             implementation(libs.sqldelight.runtime)
             implementation(libs.google.generativeai)
+        }
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(libs.sqldelight.jvm.driver)
+                implementation(libs.kotlinx.coroutines.swing)
+            }
         }
         iosMain.dependencies {
             implementation(libs.sqldelight.native.driver)
@@ -100,6 +110,18 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+    }
+}
+
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "Expense Tracker"
+            packageVersion = "1.0.0"
+        }
     }
 }
 

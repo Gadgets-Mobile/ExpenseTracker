@@ -19,16 +19,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.zoho.gadgets.expense.tracker.di.koinViewModel
 import com.zoho.gadgets.expense.tracker.presentation.components.TransactionItem
 import com.zoho.gadgets.expense.tracker.presentation.navigation.enums.Purpose
 import com.zoho.gadgets.expense.tracker.presentation.navigation.enums.Purpose.ADD
 import com.zoho.gadgets.expense.tracker.presentation.navigation.model.AppScreen
-import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +36,7 @@ fun DashboardRoute(
     navController: NavController,
     viewModel: DashboardViewModel = koinViewModel(),
 ) {
-    val entries by viewModel.entries.collectAsStateWithLifecycle()
+    val entries by viewModel.entries.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.getAllEntries()

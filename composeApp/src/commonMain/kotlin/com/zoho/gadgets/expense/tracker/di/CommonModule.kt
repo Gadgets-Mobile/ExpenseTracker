@@ -6,22 +6,10 @@ import com.zoho.gadgets.expense.tracker.data.repository.DefaultTransactionsRepos
 import com.zoho.gadgets.expense.tracker.data.repository.GenerativeAiRepository
 import com.zoho.gadgets.expense.tracker.data.utils.ResponseParser
 import com.zoho.gadgets.expense.tracker.domain.repository.TransactionsRepository
-import com.zoho.gadgets.expense.tracker.presentation.screens.addEditEntry.AddEditEntryViewModel
-import com.zoho.gadgets.expense.tracker.presentation.screens.dashboard.DashboardViewModel
-import com.zoho.gadgets.expense.tracker.presentation.screens.debtRecommendation.DebtRecommendationViewmodel
-import com.zoho.gadgets.expense.tracker.presentation.screens.purchaseRecommendation.PurchaseRecommendationViewmodel
-import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val daoModule = module {
     single<LedgerEntryDao> { LedgerEntryDao(get()) }
-}
-
-val viewModelModule = module {
-    viewModel { AddEditEntryViewModel(get()) }
-    viewModel { DashboardViewModel(get()) }
-    viewModel { DebtRecommendationViewmodel(get(), get()) }
-    viewModel { PurchaseRecommendationViewmodel(get(), get()) }
 }
 
 val dataModule = module {
@@ -38,9 +26,10 @@ val repositoryModule = module {
     }
 }
 
-fun commonModules() = listOf(
+fun appModules() = listOf(
     daoModule,
     dataModule,
     repositoryModule,
-    viewModelModule
+    viewModelModule,
+    platformModule
 )
